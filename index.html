@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TabLift Privacy Policy</title>
+    <title>TabLift — Guitar Tab & Chord Auto-Formatter</title>
+    <meta name="description" content="TabLift is a browser extension that cleans up guitar tab and chord sheets right on the page, with chord diagrams, alternate tunings, and optional cross-device sync." />
     <style>
       :root { color-scheme: light dark; }
       body {
@@ -18,104 +19,65 @@
       @media (prefers-color-scheme: dark) {
         body { color: #e6e6e6; background: #17181c; }
         a { color: #8ab4f8; }
-        .updated, .muted { color: #9aa0a6 !important; }
-        code { background: #2a2b30; }
+        .muted { color: #9aa0a6 !important; }
+        .btn { border-color: #444 !important; color: #e6e6e6 !important; }
       }
-      h1 { font-size: 26px; margin-bottom: 4px; }
-      h2 { font-size: 17px; margin-top: 34px; }
-      .updated { color: #6b7280; font-size: 13px; margin-top: 0; }
+      h1 { font-size: 30px; margin-bottom: 4px; }
+      .tagline { color: #6b7280; font-size: 16px; margin-top: 0; }
+      h2 { font-size: 18px; margin-top: 34px; }
       .muted { color: #6b7280; }
       ul { padding-left: 22px; }
       li { margin: 6px 0; }
-      code { background: #f1f2f4; padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
-      table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
-      th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid rgba(128,128,128,0.25); vertical-align: top; }
-      th { font-weight: 600; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+      .btn {
+        display: inline-block;
+        border: 1px solid #d5d8de;
+        border-radius: 8px;
+        padding: 9px 16px;
+        text-decoration: none;
+        color: #1f2328;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid rgba(128,128,128,0.25); font-size: 13px; }
     </style>
   </head>
   <body>
-    <h1>TabLift Privacy Policy</h1>
-    <p class="updated">Last updated: 2026-07-16</p>
+    <h1>TabLift</h1>
+    <p class="tagline">Guitar Tab &amp; Chord Auto-Formatter</p>
 
     <p>
-      TabLift is a browser extension that cleans up guitar tab and chord sheets. This
-      page explains what data TabLift collects, why, and what control you have over it.
+      TabLift is a browser extension that cleans up messy guitar tab and chord
+      sheets right on the page you're already reading &mdash; no copy-pasting
+      into another app. It works entirely in your browser.
     </p>
 
-    <h2>The short version</h2>
+    <div class="actions">
+      <a class="btn" href="privacy-policy.html">Privacy Policy</a>
+      <a class="btn" href="mailto:trav-dev@outlook.com">Contact</a>
+    </div>
+
+    <h2>What it does</h2>
     <ul>
-      <li>TabLift works fully offline by default. If you never create an account, none of your data ever leaves your device.</li>
-      <li>Creating an account is optional and only used to sync your settings, your own search API key, and your saved song library across your devices.</li>
-      <li>We store your email address and a unique account ID &mdash; nothing else about you as a person.</li>
-      <li>We never sell your data, to anyone, ever.</li>
-      <li>We don't collect or store any billing/payment information &mdash; TabLift has no paid tier.</li>
-      <li>You can permanently delete your account and all synced data at any time, from inside the extension.</li>
+      <li>One-click cleanup of loose, misaligned ASCII guitar tab into standard formatting</li>
+      <li>14 alternate tunings (Rock, Metal, Acoustic/Fingerstyle, Baritone), plus Standard and Drop D &mdash; TabLift recalculates every fret and chord shape for the tuning you pick</li>
+      <li>Auto-generated chord diagrams with finger numbers and barre detection, for any chord in any supported tuning</li>
+      <li>Chord &harr; Tab conversion, a chord lookup tool, a local song library, transpose, metronome, and print/PDF export</li>
     </ul>
 
-    <h2>What we store, and why</h2>
-    <table>
-      <tr><th>Data</th><th>Why we have it</th><th>Where it lives</th></tr>
-      <tr>
-        <td>Saved tabs/chords, transpose settings, tuning, theme, etc.</td>
-        <td>Core functionality of the extension</td>
-        <td>Locally on your device only, unless you sign in (below)</td>
-      </tr>
-      <tr>
-        <td>Email address, account ID (a random identifier, not derived from anything personal)</td>
-        <td>To authenticate you and know which synced data belongs to you</td>
-        <td>Supabase (see "Who else sees your data" below), only if you create an account</td>
-      </tr>
-      <tr>
-        <td>Your search API key (for the optional Search feature), settings/preferences, saved song library</td>
-        <td>To sync these across your devices when you're signed in</td>
-        <td>Supabase, only if you create an account and use sync</td>
-      </tr>
-    </table>
-    <p class="muted">
-      We do not collect browsing history, page contents from sites you visit, analytics,
-      or any tracking data of any kind. TabLift doesn't include ads or an analytics SDK.
-    </p>
-
-    <h2>Signing in</h2>
+    <h2>Optional account &amp; sync</h2>
     <p>
-      Account creation uses Google, Apple, or Microsoft sign-in. When you sign in, that
-      provider shares your email address and account identifier with our authentication
-      service (Supabase) so it can create your account &mdash; TabLift never sees or
-      stores your password, and we never receive anything from these providers beyond
-      what's needed to identify your account.
+      TabLift works fully offline with no account. Signing in with Google or
+      Microsoft is entirely optional, and is used only to sync your settings,
+      your own search API key, and your saved song library across your
+      devices. We never see your password &mdash; sign-in is handled by
+      Google/Microsoft directly. See the <a href="privacy-policy.html">Privacy Policy</a>
+      for exactly what's stored and how to delete it at any time.
     </p>
 
-    <h2>Who else sees your data</h2>
-    <ul>
-      <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
-      <li><strong>Google / Apple / Microsoft</strong> act only as sign-in providers, per above.</li>
-      <li><strong>Brave Search API</strong> &mdash; only if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
-    </ul>
-    <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
-
-    <h2>How long we keep it</h2>
-    <p>
-      Synced data is kept for as long as your account exists. If you delete your
-      account, your account and all synced settings/songs are permanently deleted
-      immediately &mdash; this isn't a soft-delete or a grace period. If you never
-      created an account, uninstalling the extension removes all local data from your
-      device.
-    </p>
-
-    <h2>Your rights</h2>
-    <ul>
-      <li><strong>Access:</strong> your synced settings and song library are visible directly in the extension at any time.</li>
-      <li><strong>Deletion:</strong> open the extension's Account panel and choose "Delete my account" to permanently delete your account and all synced data. You can also email us (below) to request deletion.</li>
-      <li><strong>Portability:</strong> your local song library can be exported to a file at any time from the Library tab.</li>
-    </ul>
-
-    <h2>Children's privacy</h2>
-    <p>TabLift is not directed at children under 13, and we do not knowingly collect data from children under 13.</p>
-
-    <h2>Changes to this policy</h2>
-    <p>If our practices change, we'll update this page and the "Last updated" date above.</p>
-
-    <h2>Contact</h2>
-    <p>Questions, or a deletion request by email: <a href="mailto:trav-dev@outlook.com">trav-dev@outlook.com</a></p>
+    <footer class="muted">
+      TabLift™ is a trademark of Travis Gottsch. Contact:
+      <a href="mailto:trav-dev@outlook.com">trav-dev@outlook.com</a>
+    </footer>
   </body>
 </html>
