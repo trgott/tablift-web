@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TabLift — Guitar Tab & Chord Auto-Formatter</title>
     <meta name="description" content="TabLift is a browser extension that cleans up guitar tab and chord sheets right on the page, with chord diagrams, alternate tunings, and optional cross-device sync." />
+    <link rel="icon" href="logo.png" />
     <style>
       :root { color-scheme: light dark; }
       body {
@@ -22,6 +23,8 @@
         .muted { color: #9aa0a6 !important; }
         .btn { border-color: #444 !important; color: #e6e6e6 !important; }
       }
+      .brand { display: flex; align-items: center; gap: 14px; }
+      .brand img { width: 64px; height: 64px; border-radius: 14px; }
       h1 { font-size: 30px; margin-bottom: 4px; }
       .tagline { color: #6b7280; font-size: 16px; margin-top: 0; }
       h2 { font-size: 18px; margin-top: 34px; }
@@ -43,8 +46,13 @@
     </style>
   </head>
   <body>
-    <h1>TabLift</h1>
-    <p class="tagline">Guitar Tab &amp; Chord Auto-Formatter</p>
+    <div class="brand">
+      <img src="logo.png" alt="TabLift logo" width="64" height="64" />
+      <div>
+        <h1>TabLift</h1>
+        <p class="tagline">Guitar Tab &amp; Chord Auto-Formatter</p>
+      </div>
+    </div>
 
     <p>
       TabLift is a browser extension that cleans up messy guitar tab and chord
