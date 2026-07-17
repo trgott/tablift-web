@@ -35,21 +35,22 @@
   </head>
   <body>
     <h1>TabLift Privacy Policy</h1>
-    <p class="updated">Last updated: 2026-07-16</p>
+    <p class="updated">Last updated: 2026-07-17</p>
 
     <p>
-      TabLift is a browser extension that cleans up guitar tab and chord sheets. This
-      page explains what data TabLift collects, why, and what control you have over it.
+      TabLift is a browser extension and Android app that clean up guitar tab and chord
+      sheets. This page explains what data TabLift collects, why, and what control you
+      have over it, across both the extension and the mobile app.
     </p>
 
     <h2>The short version</h2>
     <ul>
-      <li>TabLift works fully offline by default. If you never create an account, none of your data ever leaves your device.</li>
-      <li>Creating an account is optional and only used to sync your settings, your own search API key, and your saved song library across your devices.</li>
+      <li>The browser extension works fully offline by default. If you never create an account, none of your data ever leaves your device. The mobile app always uses an account, since your library needs somewhere to live between sessions and devices.</li>
+      <li>Creating an account is optional on the extension, and lets you sync your settings, your saved song library, and (on the extension) your own search API key across devices.</li>
       <li>We store your email address and a unique account ID &mdash; nothing else about you as a person.</li>
       <li>We never sell your data, to anyone, ever.</li>
-      <li>We don't collect or store any billing/payment information &mdash; TabLift has no paid tier.</li>
-      <li>You can permanently delete your account and all synced data at any time, from inside the extension.</li>
+      <li>TabLift offers an optional Pro subscription (unlimited sync, unlimited search results, and other Pro features). Payment is handled entirely by Stripe &mdash; we never see or store your card details, only your subscription status.</li>
+      <li>You can permanently delete your account and all synced data at any time, from inside the extension or the app.</li>
     </ul>
 
     <h2>What we store, and why</h2>
@@ -57,18 +58,23 @@
       <tr><th>Data</th><th>Why we have it</th><th>Where it lives</th></tr>
       <tr>
         <td>Saved tabs/chords, transpose settings, tuning, theme, etc.</td>
-        <td>Core functionality of the extension</td>
-        <td>Locally on your device only, unless you sign in (below)</td>
+        <td>Core functionality of the extension and app</td>
+        <td>Locally on your device always; also in Supabase once you're signed in, so it syncs across devices</td>
       </tr>
       <tr>
         <td>Email address, account ID (a random identifier, not derived from anything personal)</td>
         <td>To authenticate you and know which synced data belongs to you</td>
-        <td>Supabase (see "Who else sees your data" below), only if you create an account</td>
+        <td>Supabase (see "Who else sees your data" below)</td>
       </tr>
       <tr>
-        <td>Your search API key (for the optional Search feature), settings/preferences, saved song library</td>
+        <td>Your search API key (extension only, for the optional Search feature), settings/preferences, saved song library</td>
         <td>To sync these across your devices when you're signed in</td>
         <td>Supabase, only if you create an account and use sync</td>
+      </tr>
+      <tr>
+        <td>Subscription plan (free/Pro) and Stripe customer ID</td>
+        <td>To know which features your account is entitled to</td>
+        <td>Supabase. No card numbers or other payment details are ever stored by us &mdash; Stripe holds those.</td>
       </tr>
     </table>
     <p class="muted">
@@ -78,18 +84,21 @@
 
     <h2>Signing in</h2>
     <p>
-      Account creation uses Google sign-in. When you sign in, that
-      provider shares your email address and account identifier with our authentication
-      service (Supabase) so it can create your account &mdash; TabLift never sees or
-      stores your password, and we never receive anything from these providers beyond
-      what's needed to identify your account.
+      Account creation uses Google sign-in (both extension and app), and Apple sign-in
+      (app, once available on iOS). When you sign in, that provider shares your email
+      address and account identifier with our authentication service (Supabase) so it
+      can create your account &mdash; TabLift never sees or stores your password, and we
+      never receive anything from these providers beyond what's needed to identify your
+      account.
     </p>
 
     <h2>Who else sees your data</h2>
     <ul>
       <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
-      <li><strong>Google</strong> acts only as a sign-in provider, per above.</li>
-      <li><strong>Brave Search API</strong> &mdash; only if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
+      <li><strong>Google</strong> and <strong>Apple</strong> act only as sign-in providers, per above.</li>
+      <li><strong>Stripe</strong> processes Pro subscription payments. Your payment details go directly to Stripe; we only ever receive your subscription status and a customer reference ID, never your card number or other payment details.</li>
+      <li><strong>Brave Search API</strong> (browser extension only) &mdash; if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
+      <li><strong>Bing Web Search API</strong> (mobile app only) &mdash; powers the app's search feature. Unlike the extension's Brave integration, the app's search queries pass through our server (so we can apply your account's free/Pro result limit) before being forwarded to Bing. We do not log or store search query text.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
 
@@ -98,15 +107,15 @@
       Synced data is kept for as long as your account exists. If you delete your
       account, your account and all synced settings/songs are permanently deleted
       immediately &mdash; this isn't a soft-delete or a grace period. If you never
-      created an account, uninstalling the extension removes all local data from your
-      device.
+      created an account on the extension, uninstalling it removes all local data from
+      your device.
     </p>
 
     <h2>Your rights</h2>
     <ul>
-      <li><strong>Access:</strong> your synced settings and song library are visible directly in the extension at any time.</li>
-      <li><strong>Deletion:</strong> open the extension's Account panel and choose "Delete my account" to permanently delete your account and all synced data. You can also email us (below) to request deletion. Full steps: <a href="data-deletion.html">Data Deletion Instructions</a>.</li>
-      <li><strong>Portability:</strong> your local song library can be exported to a file at any time from the Library tab.</li>
+      <li><strong>Access:</strong> your synced settings and song library are visible directly in the extension or the app at any time.</li>
+      <li><strong>Deletion:</strong> open the extension's Account panel, or the app's Settings screen, and choose "Delete my account" to permanently delete your account and all synced data. You can also email us (below) to request deletion. Full steps: <a href="data-deletion.html">Data Deletion Instructions</a>.</li>
+      <li><strong>Portability:</strong> your song library can be exported to a file at any time from the Library tab (extension) or Settings (app).</li>
     </ul>
 
     <h2>Children's privacy</h2>
