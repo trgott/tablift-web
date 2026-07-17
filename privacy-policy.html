@@ -78,7 +78,7 @@
 
     <h2>Signing in</h2>
     <p>
-      Account creation uses Google or Apple sign-in. When you sign in, that
+      Account creation uses Google sign-in. When you sign in, that
       provider shares your email address and account identifier with our authentication
       service (Supabase) so it can create your account &mdash; TabLift never sees or
       stores your password, and we never receive anything from these providers beyond
@@ -88,7 +88,7 @@
     <h2>Who else sees your data</h2>
     <ul>
       <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
-      <li><strong>Google / Apple</strong> act only as sign-in providers, per above.</li>
+      <li><strong>Google</strong> acts only as a sign-in provider, per above.</li>
       <li><strong>Brave Search API</strong> &mdash; only if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
