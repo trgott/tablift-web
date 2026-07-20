@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TabLift Premium</title>
+    <meta name="description" content="Upgrade to TabLift Pro for unlimited sync, web search, set lists, folders, and more." />
+    <link rel="icon" href="logo.png" />
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        font-family: -apple-system, system-ui, "Segoe UI", sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px 60px;
+        line-height: 1.6;
+        color: #1f2328;
+        background: #fff;
+      }
+      @media (prefers-color-scheme: dark) {
+        body { color: #e6e6e6; background: #17181c; }
+        a { color: #8ab4f8; }
+        .muted { color: #9aa0a6 !important; }
+        .btn { border-color: #444 !important; color: #e6e6e6 !important; }
+        .card { border-color: #333 !important; background: #1f2024 !important; }
+        .msg.error { background: #3a1f22 !important; color: #ffb4b4 !important; }
+        .msg.ok { background: #16321f !important; color: #b7f0c4 !important; }
+      }
+      .brand { display: flex; align-items: center; gap: 14px; }
+      .brand img { width: 64px; height: 64px; border-radius: 14px; }
+      h1 { font-size: 30px; margin-bottom: 4px; }
+      .tagline { color: #6b7280; font-size: 16px; margin-top: 0; }
+      .muted { color: #6b7280; }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+      .btn {
+        display: inline-block;
+        border: 1px solid #d5d8de;
+        border-radius: 8px;
+        padding: 9px 16px;
+        text-decoration: none;
+        color: #1f2328;
+        font-weight: 600;
+        font-size: 14px;
+        background: transparent;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn.primary { background: #b45309; border-color: #b45309; color: #fff; }
+      .btn:disabled { opacity: 0.5; cursor: default; }
+      .cards { display: flex; gap: 14px; flex-wrap: wrap; margin: 24px 0; }
+      .card {
+        flex: 1;
+        min-width: 200px;
+        border: 1px solid #d5d8de;
+        border-radius: 12px;
+        padding: 18px;
+        background: #fafafa;
+      }
+      .card h3 { margin: 0 0 4px; font-size: 16px; }
+      .card .price { font-size: 26px; font-weight: 700; margin: 6px 0; }
+      .card .price span { font-size: 14px; font-weight: 500; color: #6b7280; }
+      .msg { border-radius: 8px; padding: 10px 14px; font-size: 14px; margin: 16px 0; display: none; }
+      .msg.error { background: #fdeded; color: #922; display: block; }
+      .msg.ok { background: #e8f7ee; color: #175c33; display: block; }
+      ul { padding-left: 22px; }
+      li { margin: 6px 0; }
+      footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid rgba(128,128,128,0.25); font-size: 13px; }
+      #loading { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="brand">
+      <img src="logo.png" alt="TabLift logo" width="64" height="64" />
+      <div>
+        <h1>TabLift Premium</h1>
+        <p class="tagline">Unlimited sync, web search, set lists, and more</p>
+      </div>
+    </div>
+
+    <div id="loading" class="muted">Loading…</div>
+    <div id="msg" class="msg"></div>
+
+    <!-- Signed out: sign in to continue -->
+    <section id="signedOut" style="display:none">
+      <p>Sign in with the same account you use in the TabLift app or browser extension to subscribe or manage your plan.</p>
+      <div class="actions">
+        <button class="btn primary" id="signInGoogle">Continue with Google</button>
+        <!-- Apple sign-in is hidden until it's actually enabled in Supabase
+             Auth (external_apple_enabled is currently false) -- same
+             showAppleSignIn gate the mobile app and extension already use,
+             so this page doesn't offer a button that would just fail. -->
+      </div>
+    </section>
+
+    <!-- Signed in, free plan -->
+    <section id="freePlan" style="display:none">
+      <p>Signed in as <strong id="freeEmail"></strong>. <button class="btn" id="signOutFree">Sign out</button></p>
+      <div class="cards">
+        <div class="card">
+          <h3>Monthly</h3>
+          <div class="price">$3<span>/month</span></div>
+          <button class="btn primary" id="subMonthly">Subscribe monthly</button>
+        </div>
+        <div class="card">
+          <h3>Yearly</h3>
+          <div class="price">$30<span>/year</span></div>
+          <button class="btn primary" id="subYearly">Subscribe yearly</button>
+        </div>
+      </div>
+      <h3>Pro includes</h3>
+      <ul>
+        <li>Unlimited synced songs, on mobile and the browser extension</li>
+        <li>Web search for tabs &amp; chords</li>
+        <li>Set lists and folders</li>
+        <li>Advanced metronome (accents, subdivisions, tap tempo, time signatures)</li>
+        <li>Auto-tuning detection and capo suggestions</li>
+        <li>Export to PDF</li>
+        <li>8 more alternate tunings</li>
+      </ul>
+    </section>
+
+    <!-- Signed in, already Pro -->
+    <section id="proPlan" style="display:none">
+      <p>Signed in as <strong id="proEmail"></strong>. <button class="btn" id="signOutPro">Sign out</button></p>
+      <p>⭐ You're on <strong>TabLift Pro</strong>. Manage your subscription, update your payment method, or cancel anytime below.</p>
+      <div class="actions">
+        <button class="btn primary" id="manageBilling">Manage subscription</button>
+      </div>
+    </section>
+
+    <footer class="muted">
+      TabLift™ is a trademark of Travis Gottsch. Contact:
+      <a href="mailto:trav-dev@outlook.com">trav-dev@outlook.com</a> ·
+      <a href="privacy-policy.html">Privacy Policy</a>
+    </footer>
+
+    <script type="module">
+      import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+      // Same project both the mobile app and browser extension use --
+      // subscribing here immediately applies to the same account signed in
+      // on either. The anon key is safe to embed client-side: it can only
+      // do what the project's RLS policies allow (see supabase/schema.sql),
+      // which for `profiles` is "read your own row," nothing else.
+      const SUPABASE_URL = "https://pzyqtaevepzfykpfgbwh.supabase.co";
+      const SUPABASE_ANON_KEY = "sb_publishable_wviI0mdJzNOzVKyffrVSpg_AtFfsvrv";
+      const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const PRICE_MONTHLY = "price_1Tv65xJE0hVDER6kbVJxSO4S";
+      const PRICE_YEARLY = "price_1Tv666JE0hVDER6kSudLhNyR";
+
+      const $ = (id) => document.getElementById(id);
+      const loadingEl = $("loading");
+      const msgEl = $("msg");
+
+      function showMsg(text, kind) {
+        if (!text) { msgEl.style.display = "none"; return; }
+        msgEl.textContent = text;
+        msgEl.className = "msg " + (kind || "error");
+      }
+
+      function showSection(id) {
+        ["signedOut", "freePlan", "proPlan"].forEach((s) => {
+          $(s).style.display = s === id ? "" : "none";
+        });
+      }
+
+      async function refresh() {
+        loadingEl.style.display = "";
+        const { data: { session } } = await supabase.auth.getSession();
+        loadingEl.style.display = "none";
+
+        if (!session) {
+          showSection("signedOut");
+          return;
+        }
+
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("plan")
+          .eq("id", session.user.id)
+          .maybeSingle();
+        if (error) {
+          showMsg("Couldn't load your account. Try refreshing the page.", "error");
+          return;
+        }
+
+        const isPro = profile && profile.plan === "pro";
+        $("freeEmail").textContent = session.user.email || "";
+        $("proEmail").textContent = session.user.email || "";
+        showSection(isPro ? "proPlan" : "freePlan");
+      }
+
+      // Calls one of the billing edge functions (create-checkout-session /
+      // create-portal-session) with the signed-in user's own access token,
+      // then redirects the whole page to the Stripe-hosted URL it returns
+      // -- Checkout for subscribing, the Billing Portal for managing/
+      // cancelling. Neither this page nor the edge functions ever handle
+      // card details directly.
+      async function callBillingFunction(fn, body, button) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) { showMsg("Please sign in first.", "error"); return; }
+        showMsg("");
+        button.disabled = true;
+        try {
+          const res = await fetch(`${SUPABASE_URL}/functions/v1/${fn}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session.access_token}`,
+            },
+            body: JSON.stringify(body),
+          });
+          const json = await res.json();
+          if (!res.ok || !json.url) throw new Error(json.error || "Something went wrong.");
+          window.location.href = json.url;
+        } catch (e) {
+          showMsg(e.message || "Something went wrong.", "error");
+          button.disabled = false;
+        }
+      }
+
+      $("signInGoogle").addEventListener("click", async (e) => {
+        showMsg("");
+        e.target.disabled = true;
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: window.location.href },
+        });
+        // On success this navigates away to Google immediately, so this
+        // line only runs on failure -- previously the error was discarded,
+        // which looked exactly like the button doing nothing at all.
+        if (error) {
+          showMsg(error.message, "error");
+          e.target.disabled = false;
+        }
+      });
+      $("signOutFree").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
+      $("signOutPro").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
+
+      $("subMonthly").addEventListener("click", () =>
+        callBillingFunction("create-checkout-session", { priceId: PRICE_MONTHLY, redirectTo: window.location.href }, $("subMonthly"))
+      );
+      $("subYearly").addEventListener("click", () =>
+        callBillingFunction("create-checkout-session", { priceId: PRICE_YEARLY, redirectTo: window.location.href }, $("subYearly"))
+      );
+      $("manageBilling").addEventListener("click", () =>
+        callBillingFunction("create-portal-session", { returnUrl: window.location.href }, $("manageBilling"))
+      );
+
+      supabase.auth.onAuthStateChange(() => refresh());
+      refresh();
+    </script>
+  </body>
+</html>
