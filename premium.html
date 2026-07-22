@@ -83,6 +83,7 @@
     <!-- Signed out: sign in to continue -->
     <section id="signedOut" style="display:none">
       <p>Sign in with the same account you use in the TabLift app or browser extension to subscribe or manage your plan.</p>
+      <p class="muted">Pro sign-in is still rolling out — if Google sign-in doesn't work for you yet, check back soon.</p>
       <div class="actions">
         <button class="btn primary" id="signInGoogle">Continue with Google</button>
         <!-- Apple sign-in is hidden until it's actually enabled in Supabase
@@ -198,6 +199,17 @@
         const { data: { session } } = await supabase.auth.getSession();
         loadingEl.style.display = "none";
 
+        // Once a session exists, strip any #access_token=... fragment left
+        // in the address bar by the OAuth redirect -- otherwise a bookmark,
+        // reload, or retry captures that stale fragment via
+        // window.location.href below and Supabase appends a NEW token
+        // fragment after it instead of replacing it, snowballing on every
+        // retry (confirmed live: a chain of several concatenated
+        // #access_token=... blocks after a few retries).
+        if (session && window.location.hash) {
+          history.replaceState(null, "", window.location.pathname + window.location.search);
+        }
+
         if (!session) {
           showSection("signedOut");
           return;
@@ -253,7 +265,13 @@
         e.target.disabled = true;
         const { error } = await supabase.auth.signInWithOAuth({
           provider: "google",
-          options: { redirectTo: window.location.href },
+          // Deliberately NOT window.location.href -- that can carry a
+          // leftover #access_token=... fragment from a previous attempt
+          // (bookmark, retry, reload) forward into this new redirect
+          // target, which Supabase then appends ANOTHER token fragment to
+          // rather than replacing, snowballing on every retry. Origin +
+          // pathname is always clean.
+          options: { redirectTo: window.location.origin + window.location.pathname },
         });
         // On success this navigates away to Google immediately, so this
         // line only runs on failure -- previously the error was discarded,

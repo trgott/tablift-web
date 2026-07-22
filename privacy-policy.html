@@ -35,7 +35,7 @@
   </head>
   <body>
     <h1>TabLift Privacy Policy</h1>
-    <p class="updated">Last updated: 2026-07-17</p>
+    <p class="updated">Last updated: 2026-07-22</p>
 
     <p>
       TabLift is a browser extension and Android app that clean up guitar tab and chord
@@ -98,7 +98,7 @@
       <li><strong>Google</strong> and <strong>Apple</strong> act only as sign-in providers, per above.</li>
       <li><strong>Stripe</strong> processes Pro subscription payments. Your payment details go directly to Stripe; we only ever receive your subscription status and a customer reference ID, never your card number or other payment details.</li>
       <li><strong>Brave Search API</strong> (browser extension only) &mdash; if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
-      <li><strong>Bing Web Search API</strong> (mobile app only) &mdash; powers the app's search feature. Unlike the extension's Brave integration, the app's search queries pass through our server (so we can apply your account's free/Pro result limit) before being forwarded to Bing. We do not log or store search query text.</li>
+      <li><strong>Brave Search API</strong> (mobile app, Pro feature) &mdash; also powers the app's search feature. Unlike the extension's bring-your-own-key integration above, the app's search queries go through our server first (so we can enforce your account's monthly search quota) and are then forwarded to Brave using our own shared API key. To reduce cost, results are cached on our server for up to 7 days, keyed by a normalized version of the query text rather than by your account &mdash; that cache is shared across all users and is never linked back to who searched for what.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
 
