@@ -147,13 +147,23 @@
       </ul>
     </section>
 
-    <!-- Signed in, already Pro -->
+    <!-- Signed in, already Pro (Stripe) -->
     <section id="proPlan" style="display:none">
       <p>Signed in as <strong id="proEmail"></strong>. <button class="btn" id="signOutPro">Sign out</button></p>
       <p>⭐ You're on <strong>TabLift Pro</strong>. Manage your subscription, update your payment method, or cancel anytime below.</p>
       <div class="actions">
         <button class="btn primary" id="manageBilling">Manage subscription</button>
       </div>
+    </section>
+
+    <!-- Signed in, already Pro via Google Play -- no Stripe customer exists
+         for these accounts, so create-portal-session has nothing to open.
+         Play subscriptions are managed entirely on-device/in the Play
+         Store, not from a website. -->
+    <section id="proPlanGooglePlay" style="display:none">
+      <p>Signed in as <strong id="proGpEmail"></strong>. <button class="btn" id="signOutProGp">Sign out</button></p>
+      <p>⭐ You're on <strong>TabLift Pro</strong>, subscribed via Google Play.</p>
+      <p class="muted">Manage or cancel your subscription from the TabLift Android app (Settings → Manage subscription) or the Play Store app on your device -- Play subscriptions can't be managed from this website.</p>
     </section>
 
     <footer class="muted">
@@ -188,7 +198,7 @@
       }
 
       function showSection(id) {
-        ["signedOut", "freePlan", "proPlan"].forEach((s) => {
+        ["signedOut", "freePlan", "proPlan", "proPlanGooglePlay"].forEach((s) => {
           $(s).style.display = s === id ? "" : "none";
         });
       }
@@ -216,7 +226,7 @@
 
         const { data: profile, error } = await supabase
           .from("profiles")
-          .select("plan")
+          .select("plan, subscription_provider")
           .eq("id", session.user.id)
           .maybeSingle();
         if (error) {
@@ -225,9 +235,11 @@
         }
 
         const isPro = profile && profile.plan === "pro";
+        const isGooglePlay = profile && profile.subscription_provider === "google_play";
         $("freeEmail").textContent = session.user.email || "";
         $("proEmail").textContent = session.user.email || "";
-        showSection(isPro ? "proPlan" : "freePlan");
+        $("proGpEmail").textContent = session.user.email || "";
+        showSection(isPro ? (isGooglePlay ? "proPlanGooglePlay" : "proPlan") : "freePlan");
       }
 
       // Calls one of the billing edge functions (create-checkout-session /
@@ -282,6 +294,7 @@
       });
       $("signOutFree").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
       $("signOutPro").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
+      $("signOutProGp").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
 
       $("subMonthly").addEventListener("click", () =>
         callBillingFunction("create-checkout-session", { priceId: PRICE_MONTHLY, redirectTo: window.location.href }, $("subMonthly"))
