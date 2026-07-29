@@ -85,10 +85,7 @@
       <p>Sign in with the same account you use in the TabLift app or browser extension to subscribe or manage your plan.</p>
       <div class="actions">
         <button class="btn primary" id="signInGoogle">Continue with Google</button>
-        <!-- Apple sign-in is hidden until it's actually enabled in Supabase
-             Auth (external_apple_enabled is currently false) -- same
-             showAppleSignIn gate the mobile app and extension already use,
-             so this page doesn't offer a button that would just fail. -->
+        <button class="btn primary" id="signInApple">Continue with Apple</button>
       </div>
       <div class="cards">
         <div class="card">
@@ -271,11 +268,11 @@
         }
       }
 
-      $("signInGoogle").addEventListener("click", async (e) => {
+      async function signInWith(provider, button) {
         showMsg("");
-        e.target.disabled = true;
+        button.disabled = true;
         const { error } = await supabase.auth.signInWithOAuth({
-          provider: "google",
+          provider,
           // Deliberately NOT window.location.href -- that can carry a
           // leftover #access_token=... fragment from a previous attempt
           // (bookmark, retry, reload) forward into this new redirect
@@ -284,14 +281,20 @@
           // pathname is always clean.
           options: { redirectTo: window.location.origin + window.location.pathname },
         });
-        // On success this navigates away to Google immediately, so this
-        // line only runs on failure -- previously the error was discarded,
-        // which looked exactly like the button doing nothing at all.
+        // On success this navigates away to the provider immediately, so
+        // this line only runs on failure -- previously the error was
+        // discarded, which looked exactly like the button doing nothing.
         if (error) {
           showMsg(error.message, "error");
-          e.target.disabled = false;
+          button.disabled = false;
         }
-      });
+      }
+      $("signInGoogle").addEventListener("click", (e) => signInWith("google", e.target));
+      // Same Supabase Apple provider the mobile app's Android web-OAuth
+      // fallback already uses (see AuthProvider.tsx's signInWithApple) --
+      // this page has no native Apple SDK access either way, so it always
+      // goes through the OAuth redirect, same as Google above.
+      $("signInApple").addEventListener("click", (e) => signInWith("apple", e.target));
       $("signOutFree").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
       $("signOutPro").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
       $("signOutProGp").addEventListener("click", async () => { await supabase.auth.signOut(); refresh(); });
