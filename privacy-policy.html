@@ -35,21 +35,21 @@
   </head>
   <body>
     <h1>TabLift Privacy Policy</h1>
-    <p class="updated">Last updated: 2026-07-28</p>
+    <p class="updated">Last updated: 2026-10-10</p>
 
     <p>
-      TabLift is a browser extension and Android/iOS app that clean up guitar tab and chord
-      sheets. This page explains what data TabLift collects, why, and what control you
-      have over it, across both the extension and the mobile app.
+      TabLift is a browser extension and a mobile app (iOS and Android) that clean up
+      guitar tab and chord sheets. This page explains what data TabLift collects, why, and what control
+      you have over it, across both the extension and the mobile app.
     </p>
 
     <h2>The short version</h2>
     <ul>
-      <li>The browser extension works fully offline by default. If you never create an account, none of your data ever leaves your device. The mobile app always uses an account, since your library needs somewhere to live between sessions and devices.</li>
-      <li>Creating an account is optional on the extension, and lets you sync your settings, your saved song library, and (on the extension) your own search API key across devices.</li>
+      <li>Both the extension and the mobile app work without an account. If you never create one, your library stays on your device and never reaches our servers (the mobile app still sends crash reports, described below).</li>
+      <li>Creating an account is optional, and lets you sync your settings and your saved song library across devices. Your own search API key (extension only) is never synced or stored on our servers &mdash; it stays only on the device you entered it on, so you'll add it separately on each browser you use.</li>
       <li>We store your email address and a unique account ID &mdash; nothing else about you as a person.</li>
       <li>We never sell your data, to anyone, ever.</li>
-      <li>TabLift offers an optional Pro subscription (unlimited sync, unlimited search results, and other Pro features). Payment is handled by Stripe (website), Google Play Billing (Android app), or Apple's In-App Purchase system (iOS app), depending on how you subscribe &mdash; we never see or store your card details, only your subscription status.</li>
+      <li>TabLift offers an optional Pro subscription (unlimited sync, 1,000 web searches a month, and other Pro features). Payment is handled by Apple (App Store), Google (Google Play), or Stripe (our website), depending on where you subscribe &mdash; we never see or store your card details, only your subscription status.</li>
       <li>You can permanently delete your account and all synced data at any time, from inside the extension or the app.</li>
     </ul>
 
@@ -67,37 +67,58 @@
         <td>Supabase (see "Who else sees your data" below)</td>
       </tr>
       <tr>
-        <td>Your search API key (extension only, for the optional Search feature), settings/preferences, saved song library</td>
+        <td>Settings/preferences, saved song library</td>
         <td>To sync these across your devices when you're signed in</td>
         <td>Supabase, only if you create an account and use sync</td>
       </tr>
       <tr>
-        <td>Subscription plan (free/Pro), and a purchase/customer reference from whichever provider you subscribed through (Stripe, Google Play, or Apple)</td>
+        <td>Your search API key (extension only, for the optional Search feature)</td>
+        <td>To make Brave Search requests on your behalf, from your own browser</td>
+        <td>Locally on your device only &mdash; never sent to or stored on any server we control, and not synced to your other browsers</td>
+      </tr>
+      <tr>
+        <td>Subscription plan (free/Pro), subscription status, and the reference ID your payment provider (Apple, Google Play, or Stripe) uses for it</td>
         <td>To know which features your account is entitled to</td>
-        <td>Supabase. No card numbers or other payment details are ever stored by us &mdash; Stripe, Google, or Apple hold those, depending on how you subscribed.</td>
+        <td>Supabase. No card numbers or other payment details are ever stored by us &mdash; your payment provider holds those.</td>
+      </tr>
+      <tr>
+        <td>Web search counts (mobile app)</td>
+        <td>To apply search limits, including the free web-search trial</td>
+        <td>Supabase. We count searches per account; we don't keep a record of what you searched for.</td>
+      </tr>
+      <tr>
+        <td>When your account first opened the upgrade screen (mobile app) -- a single date</td>
+        <td>To understand how many people consider Pro</td>
+        <td>Supabase</td>
+      </tr>
+      <tr>
+        <td>Crash and error reports (mobile app): what went wrong, device model, operating system and app version, and your account ID if you're signed in</td>
+        <td>To find and fix bugs</td>
+        <td>Firebase Crashlytics (Google). Reports don't include your email address or your songs.</td>
       </tr>
     </table>
     <p class="muted">
-      We do not collect browsing history, page contents from sites you visit, analytics,
-      or any tracking data of any kind. TabLift doesn't include ads or an analytics SDK.
+      We do not collect browsing history, page contents from sites you visit, or any
+      advertising or tracking data. TabLift doesn't include ads or an analytics SDK.
     </p>
 
     <h2>Signing in</h2>
     <p>
-      Account creation uses Google sign-in (extension and app) or Apple sign-in (app).
-      When you sign in, that provider shares your email address and account identifier
-      with our authentication service (Supabase) so it can create your account &mdash;
-      TabLift never sees or stores your password, and we never receive anything from
-      these providers beyond what's needed to identify your account.
+      Account creation uses Google sign-in (both extension and app), and Apple sign-in
+      (iOS app). When you sign in, that provider shares your email
+      address and account identifier with our authentication service (Supabase) so it
+      can create your account &mdash; TabLift never sees or stores your password, and we
+      never receive anything from these providers beyond what's needed to identify your
+      account.
     </p>
 
     <h2>Who else sees your data</h2>
     <ul>
       <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
-      <li><strong>Google</strong> and <strong>Apple</strong> act as sign-in providers, per above, and also as payment processors if you subscribe via Google Play or Apple's In-App Purchase system (see below).</li>
-      <li><strong>Stripe</strong> processes Pro subscription payments made through our website. <strong>Google Play</strong> processes payments made through the Android app, and <strong>Apple</strong>'s In-App Purchase system processes payments made through the iOS app. In every case, your payment details go directly to that provider; we only ever receive your subscription status and a reference ID, never your card number or other payment details.</li>
+      <li><strong>Google</strong> and <strong>Apple</strong> act as sign-in providers, per above, and as payment processors if you subscribe through their app stores (below).</li>
+      <li><strong>Apple</strong>, <strong>Google Play</strong>, and <strong>Stripe</strong> process Pro subscription payments, depending on where you subscribe. Your payment details go directly to them; we only ever receive your subscription status and a reference ID, never your card number or other payment details.</li>
       <li><strong>Brave Search API</strong> (browser extension only) &mdash; if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
-      <li><strong>Brave Search API</strong> (mobile app, Pro feature) &mdash; also powers the app's search feature. Unlike the extension's bring-your-own-key integration above, the app's search queries go through our server first (so we can enforce your account's monthly search quota) and are then forwarded to Brave using our own shared API key. To reduce cost, results are cached on our server for up to 7 days, keyed by a normalized version of the query text rather than by your account &mdash; that cache is shared across all users and is never linked back to who searched for what.</li>
+      <li><strong>Brave Search API</strong> (mobile app) &mdash; powers the app's web search feature (a Pro feature, with 10 free searches for free accounts to try it). Unlike the extension's bring-your-own-key integration above, the app's search queries go through our server first (so we can check your plan and search limits) and are then forwarded to Brave using our own shared API key. To reduce cost, results are cached on our server for up to 7 days, keyed by a normalized version of the query text rather than by your account &mdash; that cache is shared across all users and is never linked back to who searched for what.</li>
       <li><strong>Firebase Crashlytics</strong> (mobile app) &mdash; if the app crashes or hits an unexpected error, a crash report (device/OS info, app version, and a stack trace) is sent to Google's Firebase Crashlytics service so we can find and fix the bug. If you're signed in, that report is tagged with your account ID so we can tell how many people a given issue affects &mdash; it never includes your saved song content, email address, or password.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
@@ -107,8 +128,8 @@
       Synced data is kept for as long as your account exists. If you delete your
       account, your account and all synced settings/songs are permanently deleted
       immediately &mdash; this isn't a soft-delete or a grace period. If you never
-      created an account on the extension, uninstalling it removes all local data from
-      your device.
+      created an account, uninstalling the extension or the app removes all local data
+      from your device. Crash reports are kept by Firebase Crashlytics for up to 90 days.
     </p>
 
     <h2>Your rights</h2>
