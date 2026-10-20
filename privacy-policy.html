@@ -46,10 +46,10 @@
     <h2>The short version</h2>
     <ul>
       <li>Both the extension and the mobile app work without an account. If you never create one, your library stays on your device and never reaches our servers (the mobile app still sends crash reports, described below).</li>
-      <li>Creating an account is optional, and lets you sync your settings and your saved song library across devices. Your own search API key (extension only) is never synced or stored on our servers &mdash; it stays only on the device you entered it on, so you'll add it separately on each browser you use.</li>
+      <li>Creating an account is optional, and lets you sync your settings and your saved song library across devices.</li>
       <li>We store your email address and a unique account ID &mdash; nothing else about you as a person.</li>
       <li>We never sell your data, to anyone, ever.</li>
-      <li>TabLift offers an optional Pro subscription (unlimited sync and 1,000 web searches a month). Payment is handled by Apple (App Store), Google (Google Play), or Stripe (our website), depending on where you subscribe &mdash; we never see or store your card details, only your subscription status. Subscribing in the mobile app doesn't require an account: without one, we keep only a random ID with your subscription status (no email or name) so Pro works and can be restored.</li>
+      <li>TabLift offers an optional Pro subscription (unlimited sync of your songs across devices). Payment is handled by Apple (App Store), Google (Google Play), or Stripe (our website), depending on where you subscribe &mdash; we never see or store your card details, only your subscription status. Subscribing in the mobile app doesn't require an account: without one, we keep only a random ID with your subscription status (no email or name) so Pro works and can be restored.</li>
       <li>You can permanently delete your account and all synced data at any time, from inside the extension or the app.</li>
     </ul>
 
@@ -72,11 +72,6 @@
         <td>Supabase, only if you create an account and use sync</td>
       </tr>
       <tr>
-        <td>Your search API key (extension only, for the optional Search feature)</td>
-        <td>To make Brave Search requests on your behalf, from your own browser</td>
-        <td>Locally on your device only &mdash; never sent to or stored on any server we control, and not synced to your other browsers</td>
-      </tr>
-      <tr>
         <td>Subscription plan (free/Pro), subscription status, and the reference ID your payment provider (Apple, Google Play, or Stripe) uses for it</td>
         <td>To know which features your account is entitled to</td>
         <td>Supabase. No card numbers or other payment details are ever stored by us &mdash; your payment provider holds those.</td>
@@ -85,11 +80,6 @@
         <td>Text of songs you import from other websites</td>
         <td>To show you the song</td>
         <td>Locally on your device only &mdash; never stored on our servers. Only the song's title, artist, and source link sync.</td>
-      </tr>
-      <tr>
-        <td>Web search counts (mobile app)</td>
-        <td>To apply search limits, including the free web-search trial</td>
-        <td>Supabase. We count searches per account; we don't keep a record of what you searched for.</td>
       </tr>
       <tr>
         <td>When your account first opened the upgrade screen (mobile app) -- a single date</td>
@@ -122,8 +112,6 @@
       <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
       <li><strong>Google</strong> and <strong>Apple</strong> act as sign-in providers, per above, and as payment processors if you subscribe through their app stores (below).</li>
       <li><strong>Apple</strong>, <strong>Google Play</strong>, and <strong>Stripe</strong> process Pro subscription payments, depending on where you subscribe. Your payment details go directly to them; we only ever receive your subscription status and a reference ID, never your card number or other payment details.</li>
-      <li><strong>Brave Search API</strong> (browser extension only) &mdash; if you turn on the optional Search feature and supply your own Brave API key. Your search queries and API key are sent directly from your browser to Brave to perform the search; they never pass through or get stored on any server we control.</li>
-      <li><strong>Brave Search API</strong> (mobile app) &mdash; powers the app's web search feature (a Pro feature, with 10 free searches for free accounts to try it). Unlike the extension's bring-your-own-key integration above, the app's search queries go through our server first (so we can check your plan and search limits) and are then forwarded to Brave using our own shared API key. To reduce cost, results are cached on our server for up to 7 days, keyed by a normalized version of the query text rather than by your account &mdash; that cache is shared across all users and is never linked back to who searched for what.</li>
       <li><strong>Firebase Crashlytics</strong> (mobile app) &mdash; if the app crashes or hits an unexpected error, a crash report (device/OS info, app version, and a stack trace) is sent to Google's Firebase Crashlytics service so we can find and fix the bug. If you're signed in, that report is tagged with your account ID so we can tell how many people a given issue affects &mdash; it never includes your saved song content, email address, or password.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
