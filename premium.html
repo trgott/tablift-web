@@ -92,10 +92,6 @@
           <h3>Monthly</h3>
           <div class="price">$1.99<span>/month</span></div>
         </div>
-        <div class="card">
-          <h3>Yearly</h3>
-          <div class="price">$14.99<span>/year</span></div>
-        </div>
       </div>
       <!-- No Subscribe buttons here -- checkout requires a signed-in
            session (callBillingFunction below checks for one), so these are
@@ -103,10 +99,12 @@
            #freePlan once actually signed in. -->
       <p class="muted">New subscribers get a 7-day free trial. Cancel anytime before it ends to avoid being charged.</p>
       <h3>Pro includes</h3>
-      <p>Everything in TabLift is free -- every tuning, set lists and collections on your device, the full metronome, capo suggestions, PDF export, Adaptive Fingering, and the Chords &amp; Scales tools. Pro adds the one thing that costs money to run, and supports the app:</p>
+      <p>Everything in TabLift is free -- every tuning, set lists and collections on your device, the full metronome, capo suggestions, PDF export, Adaptive Fingering, and the Chords &amp; Scales tools. Pro adds the things that cost money to run, and supports the app:</p>
       <ul>
         <li>Unlimited synced songs, on mobile and the browser extension</li>
         <li>Your set lists and collections synced across your devices</li>
+        <li>Your practice progress saved to your account (mobile app)</li>
+        <li>TabLift's AI in the mobile app: explain a song, make it easier, a practice plan, scan a songbook page, clean up pasted songs, licks over jam tracks, and a coach to ask</li>
       </ul>
     </section>
 
@@ -119,18 +117,15 @@
           <div class="price">$1.99<span>/month</span></div>
           <button class="btn primary" id="subMonthly">Subscribe monthly</button>
         </div>
-        <div class="card">
-          <h3>Yearly</h3>
-          <div class="price">$14.99<span>/year</span></div>
-          <button class="btn primary" id="subYearly">Subscribe yearly</button>
-        </div>
       </div>
       <p class="muted">New subscribers get a 7-day free trial. Cancel anytime before it ends to avoid being charged.</p>
       <h3>Pro includes</h3>
-      <p>Everything in TabLift is free -- every tuning, set lists and collections on your device, the full metronome, capo suggestions, PDF export, Adaptive Fingering, and the Chords &amp; Scales tools. Pro adds the one thing that costs money to run, and supports the app:</p>
+      <p>Everything in TabLift is free -- every tuning, set lists and collections on your device, the full metronome, capo suggestions, PDF export, Adaptive Fingering, and the Chords &amp; Scales tools. Pro adds the things that cost money to run, and supports the app:</p>
       <ul>
         <li>Unlimited synced songs, on mobile and the browser extension</li>
         <li>Your set lists and collections synced across your devices</li>
+        <li>Your practice progress saved to your account (mobile app)</li>
+        <li>TabLift's AI in the mobile app: explain a song, make it easier, a practice plan, scan a songbook page, clean up pasted songs, licks over jam tracks, and a coach to ask</li>
       </ul>
     </section>
 
@@ -173,7 +168,6 @@
       const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       const PRICE_MONTHLY = "price_1USlu9JovLWP0agXYtkmOE0O";
-      const PRICE_YEARLY = "price_1USluAJovLWP0agXkaHdFFpd";
 
       const $ = (id) => document.getElementById(id);
       const loadingEl = $("loading");
@@ -292,9 +286,6 @@
 
       $("subMonthly").addEventListener("click", () =>
         callBillingFunction("create-checkout-session", { priceId: PRICE_MONTHLY, redirectTo: window.location.href }, $("subMonthly"))
-      );
-      $("subYearly").addEventListener("click", () =>
-        callBillingFunction("create-checkout-session", { priceId: PRICE_YEARLY, redirectTo: window.location.href }, $("subYearly"))
       );
       $("manageBilling").addEventListener("click", () =>
         callBillingFunction("create-portal-session", { returnUrl: window.location.href }, $("manageBilling"))
