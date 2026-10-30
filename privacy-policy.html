@@ -50,7 +50,7 @@
       <li>We store your email address and a unique account ID &mdash; nothing else about you as a person.</li>
       <li>We never sell your data, to anyone, ever.</li>
       <li>TabLift offers an optional Pro subscription (unlimited sync of your songs, set lists and collections across devices). Payment is handled by Apple (App Store), Google (Google Play), or Stripe (our website), depending on where you subscribe &mdash; we never see or store your card details, only your subscription status. Subscribing in the mobile app doesn't require an account: without one, we keep only a random ID with your subscription status (no email or name) so Pro works and can be restored.</li>
-      <li>The mobile app's AI features (Pro) send only what each one needs to Anthropic's Claude, and only when you tap one. Anthropic doesn't use it to train AI. Details below.</li>
+      <li>TabLift's AI features (Pro, in the mobile app and the Chrome extension) send only what each one needs to Anthropic's Claude, and only when you tap one. Anthropic doesn't use it to train AI. Details below.</li>
       <li>You can permanently delete your account and all synced data at any time, from inside the extension or the app.</li>
     </ul>
 
@@ -88,7 +88,7 @@
         <td>Supabase</td>
       </tr>
       <tr>
-        <td>AI answers (mobile app, Pro): explanations, practice plans, easier chords, coach notes, licks and the like, plus a count of AI requests per day</td>
+        <td>AI answers (Pro): explanations, practice plans, easier chords, coach notes, licks and the like, plus a count of AI requests per day</td>
         <td>So asking the same thing again is instant and free, and to apply the daily limit of 50 requests</td>
         <td>Supabase, private to your account and deleted with it. The cleaned-up text from Clean up and Scan a page is not saved there.</td>
       </tr>
@@ -115,11 +115,11 @@
       account and deleted with it.
     </p>
 
-    <h2>AI features (mobile app)</h2>
+    <h2>AI features</h2>
     <p>
-      TabLift Pro includes optional AI features, provided by Claude, made by
+      TabLift Pro includes optional AI features in the mobile app and the Chrome extension, provided by Claude, made by
       <a href="https://www.anthropic.com">Anthropic</a>. Nothing is sent until you tap one of
-      them, and the app asks once before the first time. Each sends only what it needs:
+      them, and the app or extension asks once before the first time. Each sends only what it needs:
     </p>
     <ul>
       <li><strong>Explain this song, Practice plan, Make it easier, What's this for?, Licks, and Fill in details:</strong> the song's title and artist, chords, sections and tuning, and your playing level. Not the song's words.</li>
@@ -150,7 +150,7 @@
       <li><strong>Supabase</strong> hosts our database and authentication service. They store your account data on our behalf, encrypted at rest and in transit, and enforce database-level rules (Row Level Security) so your account can only ever read or write its own data &mdash; not even we can query one user's data through another's session.</li>
       <li><strong>Google</strong> and <strong>Apple</strong> act as sign-in providers, per above, and as payment processors if you subscribe through their app stores (below).</li>
       <li><strong>Apple</strong>, <strong>Google Play</strong>, and <strong>Stripe</strong> process Pro subscription payments, depending on where you subscribe. Your payment details go directly to them; we only ever receive your subscription status and a reference ID, never your card number or other payment details.</li>
-      <li><strong>Anthropic</strong> (mobile app, Pro) &mdash; runs the AI features, receiving only what's described under "AI features" above, when you use one.</li>
+      <li><strong>Anthropic</strong> (Pro) &mdash; runs the AI features, receiving only what's described under "AI features" above, when you use one.</li>
       <li><strong>Firebase Crashlytics</strong> (mobile app) &mdash; if the app crashes or hits an unexpected error, a crash report (device/OS info, app version, and a stack trace) is sent to Google's Firebase Crashlytics service so we can find and fix the bug. If you're signed in, that report is tagged with your account ID so we can tell how many people a given issue affects &mdash; it never includes your saved song content, email address, or password.</li>
     </ul>
     <p>We do not sell, rent, or otherwise share your data with any other third party.</p>
